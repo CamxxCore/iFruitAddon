@@ -1,0 +1,8 @@
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\x64\Debug\GTAV_iFruitContacts.dll
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\x64\Debug\GTAV_iFruitContacts.pdb
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\x64\Debug\ScriptHookVDotNet.dll
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\obj\x64\Debug\GTAV_iFruitContacts.dll
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\obj\x64\Debug\GTAV_iFruitContacts.pdb
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\GTAV_iFruitContacts.dll
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\GTAV_iFruitContacts.pdb
+c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\ScriptHookVDotNet.dll
