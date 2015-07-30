@@ -39,10 +39,6 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GTAV_iFruitContacts, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\GTAV_iFruitContacts.dll</HintPath>
-    </Reference>
     <Reference Include="ScriptHookVDotNet">
       <HintPath>..\..\..\..\..\Desktop\Files\ScriptHookVDotNet.dll</HintPath>
     </Reference>

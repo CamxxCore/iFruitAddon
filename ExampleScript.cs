@@ -31,7 +31,6 @@ namespace ExampleScript
 
     public static class Scripts
     {
-
         public static void TeleportToWaypoint()
         {
             Blip wpBlip = new Blip(Function.Call<int>(Hash.GET_FIRST_BLIP_INFO_ID, 8));
