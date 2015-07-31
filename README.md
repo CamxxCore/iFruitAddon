@@ -6,7 +6,7 @@ The project is ongoing and anyone is welcome to submit a pull request and contri
 
 --- Prerequisites ---
 ScriptHook V - http://www.dev-c.com/gtav/scripthookv/
-ScriptHook V .NET - https://www.gta5-mods.com/tools/scripthookv-net
+ScriptHook V .NET - https://github.com/crosire/scripthookvdotnet/releases
 
 --- Installation ---
 1. Reference iFruitContacts.dll in your project
