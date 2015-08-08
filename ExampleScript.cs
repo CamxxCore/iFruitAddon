@@ -2,31 +2,37 @@
 using GTA;
 using GTA.Math;
 using GTA.Native;
-using iFruitContacts;
+using iFruitAddon;
 
 namespace ExampleScript
 {
     public class ExampleScript : Script
     {
-        iFruitContactCollection contactList;
+        CustomiFruit ifruit;
 
         public ExampleScript()
         {
+            ifruit = new CustomiFruit() {
+                SelectButtonColor = System.Drawing.Color.Orange,
+                ReturnButtonColor = System.Drawing.Color.LimeGreen,
+                KeypadButtonColor = System.Drawing.Color.Purple
+            };
+
+            var contact = new iFruitContact("Spawn Adder", 10);
+            contact.Selected += (sender, args) => Scripts.SpawnVehicle("ADDER", Game.Player.Character.Position);
+            ifruit.Contacts.Add(contact);
+            contact = new iFruitContact("Teleport to Waypoint", 11);
+            contact.Selected += (sender, args) => Scripts.TeleportToWaypoint();
+            ifruit.Contacts.Add(contact);
             this.Tick += OnTick;
 
-            contactList = new iFruitContactCollection();
-            var contact = new iFruitContact("Teleport to Waypoint", 8);
-            contact.Selected += (parent, item) => Scripts.TeleportToWaypoint();
-            contactList.Add(contact);
-            contact = new iFruitContact("Spawn Adder", 9);
-            contact.Selected += (parent, item) => Scripts.SpawnVehicle("ADDER", Game.Player.Character.Position + Game.Player.Character.ForwardVector * 4);
-            contactList.Add(contact);
         }
 
         void OnTick(object sender, EventArgs e)
         {
-            contactList.Update();
+            ifruit.Update();
         }
+
     }
 
     public static class Scripts
@@ -45,7 +51,7 @@ namespace ExampleScript
                 UI.ShowSubtitle("Waypoint not active.");
             }
         }
-    
+
         public static void SpawnVehicle(string vehiclename, Vector3 pos)
         {
             Model model = new Model(vehiclename);
@@ -54,4 +60,5 @@ namespace ExampleScript
             Function.Call(Hash.SET_PED_INTO_VEHICLE, Game.Player.Character.Handle, veh.Handle, -1);
         }
     }
+
 }

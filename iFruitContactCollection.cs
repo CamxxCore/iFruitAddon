@@ -2,32 +2,31 @@
 using GTA.Native;
 using GTA;
 
-namespace iFruitContacts
+namespace iFruitAddon
 {
     public delegate void ContactSelectedEvent(iFruitContactCollection sender, iFruitContact selectedItem);
 
     public class iFruitContactCollection : List<iFruitContact>
     {
-        private int _mHash, _mHandle;
+        private int _mHash;
 
         public iFruitContactCollection()
         {
             this._mHash = Function.Call<int>(Hash.GET_HASH_KEY, "appcontacts");
-            this._mHandle = RefreshActiveMobile();
         }
 
         private bool _shouldDraw = true;
 
-        public void Update()
+        public void Update(int handle)
         {
             if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mHash) > 0)
             {
-                int index = GetSelectedIndex();
+                int index = GetSelectedIndex(handle);
 
                 if (_shouldDraw)
                 {
                     Script.Wait(10);
-                    base.ForEach(x => x.Draw());
+                    base.ForEach(x => x.Draw(handle));
                     _shouldDraw = !_shouldDraw;
                 }
 
@@ -46,29 +45,11 @@ namespace iFruitContacts
             {
                 _shouldDraw = true;
             }
-
-            if (_mHandle != RefreshActiveMobile())
-                _mHandle = RefreshActiveMobile();
         }
 
-        public int RefreshActiveMobile()
+        public int GetSelectedIndex(int handle)
         {
-            var model = (uint)Game.Player.Character.Model.Hash;
-            switch (model)
-            {
-                case (uint)PedHash.Michael:
-                    return Function.Call<int>(Hash.REQUEST_SCALEFORM_MOVIE, "cellphone_ifruit");
-                case (uint)PedHash.Franklin:
-                    return Function.Call<int>(Hash.REQUEST_SCALEFORM_MOVIE, "cellphone_badger");
-                case (uint)PedHash.Trevor:
-                    return Function.Call<int>(Hash.REQUEST_SCALEFORM_MOVIE, "cellphone_facade");
-                default: return Function.Call<int>(Hash.REQUEST_SCALEFORM_MOVIE, "cellphone_ifruit");
-            }
-        }
-
-        public int GetSelectedIndex()
-        {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, _mHandle, "GET_CURRENT_SELECTION");
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "GET_CURRENT_SELECTION");
             int num = Function.Call<int>(Hash._POP_SCALEFORM_MOVIE_FUNCTION);
             while (!Function.Call<bool>(Hash._0x768FF8961BA904D6, num))
                 Script.Wait(0);

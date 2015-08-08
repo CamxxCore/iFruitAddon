@@ -7,8 +7,8 @@
     <ProjectGuid>{511A3666-514F-4583-8D2B-1F096554C86E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>iFruitContacts</RootNamespace>
-    <AssemblyName>iFruitContacts</AssemblyName>
+    <RootNamespace>iFruitAddon</RootNamespace>
+    <AssemblyName>iFruitAddon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -40,10 +40,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ScriptHookVDotNet">
-      <HintPath>..\..\..\..\..\Desktop\Files\ScriptHookVDotNet.dll</HintPath>
+      <HintPath>..\Files\ScriptHookVDotNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,8 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="iFruitContactCollection.cs" />
+    <Compile Include="CustomiFruit.cs" />
     <Compile Include="iFruitContact.cs" />
+    <Compile Include="iFruitContactCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
