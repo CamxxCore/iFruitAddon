@@ -6,49 +6,33 @@ namespace iFruitAddon
 {
     public class CustomiFruit
     {
-        private int _mHash;
-
-        /// <summary>
-        /// List of custom contacts in the phone
-        /// </summary>
-        private iFruitContactCollection contacts;
-        public iFruitContactCollection Contacts
-        {
-            get { return contacts; }
-            set { this.contacts = value; }
-        }
-
         /// <summary>
         /// Keypad Button Color
         /// </summary>
-        ///
-        private Color keypadButtonColor = Color.Empty;
-        public Color KeypadButtonColor
-        {
-            get { return keypadButtonColor; }
-            set { this.keypadButtonColor = value; }
-        }
+        public Color KeypadButtonColor { get; set; } = Color.Empty;
 
         /// <summary>
         /// Select Button Color
         /// </summary>
-        ///
-        private Color selectButtonColor = Color.Empty;
-        public Color SelectButtonColor
-        {
-            get { return selectButtonColor; }
-            set{ this.selectButtonColor = value; }
-        }
+        public Color SelectButtonColor { get; set; } = Color.Empty;
 
         /// <summary>
         /// Return Button Color
         /// </summary>
-        ///
-        private Color returnButtonColor = Color.Empty;
-        public Color ReturnButtonColor
+        public Color ReturnButtonColor { get; set; } = Color.Empty;
+
+        /// <summary>
+        /// Header text shown in phone UI
+        /// </summary>
+        public string HeaderText { get; set; } = string.Empty;
+
+        /// <summary>
+        /// List of custom contacts in the phone
+        /// </summary>
+        public iFruitContactCollection Contacts
         {
-            get { return returnButtonColor; }
-            set { this.returnButtonColor = value; }
+            get { return _contacts; }
+            set { _contacts = value; }
         }
 
         public int Handle
@@ -69,16 +53,13 @@ namespace iFruitAddon
             }
         }
 
-        public CustomiFruit()
-        {
-            this.contacts = new iFruitContactCollection();
-            this._mHash = Function.Call<int>(Hash.GET_HASH_KEY, "cellphone_flashhand");
-        }
+        public CustomiFruit() : this(new iFruitContactCollection())
+        { }
 
         public CustomiFruit(iFruitContactCollection contacts)
         {
-            this.contacts = contacts;
-            this._mHash = Function.Call<int>(Hash.GET_HASH_KEY, "cellphone_flashhand");
+            _contacts = contacts;
+            _mHash = Function.Call<int>(Hash.GET_HASH_KEY, "cellphone_flashhand");
         }
 
         private void SetSoftKeyColor(int key, Color color)
@@ -88,11 +69,22 @@ namespace iFruitAddon
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.R);
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.G);
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.B);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, Function.Call<int>(Hash.ROUND, 0xbf800000));
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, -1);
+            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+        }
+
+        private void SetHeaderString(string text)
+        {
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_HEADER");
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
+            Function.Call(Hash._0x761B77454205A61D, text, -1);
+            Function.Call(Hash._END_TEXT_COMPONENT);
             Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
         }
 
         private bool _shouldDraw = true;
+        private iFruitContactCollection _contacts;
+        private int _mHash;
 
         public void Update()
         {
@@ -101,23 +93,26 @@ namespace iFruitAddon
                 if (_shouldDraw)
                 {
                     Script.Wait(10);
-                    if (keypadButtonColor != Color.Empty)
-                        SetSoftKeyColor(1, keypadButtonColor);
-                    if (selectButtonColor != Color.Empty)
-                        SetSoftKeyColor(2, selectButtonColor);
-                    if (returnButtonColor != Color.Empty)
-                        SetSoftKeyColor(3, returnButtonColor);
+                    if (KeypadButtonColor != Color.Empty)
+                        SetSoftKeyColor(1, KeypadButtonColor);
+                    if (SelectButtonColor != Color.Empty)
+                        SetSoftKeyColor(2, SelectButtonColor);
+                    if (ReturnButtonColor != Color.Empty)
+                        SetSoftKeyColor(3, ReturnButtonColor);
 
                     _shouldDraw = !_shouldDraw;
                 }
 
-                contacts.Update(Handle);
+                if (HeaderText != string.Empty)
+                    SetHeaderString(HeaderText);
             }
 
             else
             {
                 _shouldDraw = true;
             }
+
+            _contacts.Update(Handle);
         }
     }
 }

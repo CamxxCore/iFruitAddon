@@ -1,6 +1,0 @@
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\ScriptHookVDotNet.dll
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\iFruitContacts.dll
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\bin\Debug\iFruitContacts.pdb
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\obj\x64\Debug\iFruitContacts.dll
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\obj\x64\Debug\iFruitContacts.pdb
-c:\users\cam\documents\visual studio 2015\Projects\GTAV_iFruitContacts\GTAV_iFruitContacts\obj\x64\Debug\iFruitContacts.csprojResolveAssemblyReference.cache

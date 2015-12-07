@@ -1,3 +1,0 @@
-C:\Users\Cam\Desktop\iFruitAddon\bin\x64\Release\iFruitAddon.dll
-C:\Users\Cam\Desktop\iFruitAddon\bin\x64\Release\ScriptHookVDotNet.dll
-C:\Users\Cam\Desktop\iFruitAddon\obj\x64\Release\iFruitAddon.dll

@@ -4,47 +4,71 @@ using GTA;
 
 namespace iFruitAddon
 {
-    public delegate void ContactSelectedEvent(iFruitContactCollection sender, iFruitContact selectedItem);
-
     public class iFruitContactCollection : List<iFruitContact>
     {
-        private int _mHash;
-
         public iFruitContactCollection()
         {
-            this._mHash = Function.Call<int>(Hash.GET_HASH_KEY, "appcontacts");
+            _mHash = Function.Call<int>(Hash.GET_HASH_KEY, "appcontacts");
         }
 
         private bool _shouldDraw = true;
+        private int _mHash;
 
         public void Update(int handle)
         {
+            int index = -1;
+
             if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mHash) > 0)
             {
-                int index = GetSelectedIndex(handle);
+                _shouldDraw = true;
 
-                if (_shouldDraw)
+                if (Function.Call<bool>(Hash.IS_CONTROL_PRESSED, 2, 176))
                 {
-                    Script.Wait(10);
-                    base.ForEach(x => x.Draw(handle));
-                    _shouldDraw = !_shouldDraw;
+                    index = GetSelectedIndex(handle);
                 }
-
-                base.ForEach(x =>
-                {
-                    if (index == x.Index)
-                    {
-                        DisableControl(176);
-                        if (GetControl(176))
-                            x.OnSelected(this);
-                    }
-                });
-
             }
             else
+                _shouldDraw = false;
+
+            foreach (var contact in this)
             {
-                _shouldDraw = true;
-            }
+                contact.Update();
+
+                if (_shouldDraw)
+                    contact.Draw(handle);
+
+                if (index != -1 && index == contact.Index)
+                {
+                    contact.Call();
+                    contact.OnSelected(this);
+                    DisplayCallUI(handle, contact.Name);
+                }
+            }   
+        }
+
+        private void DisplayCallUI(int handle, string contactName, string picName = "CELL_300")
+        {
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "SET_DATA_SLOT");
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 4);
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 0);
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 3);
+
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
+            Function.Call(Hash._0x761B77454205A61D, contactName, -1);
+            Function.Call(Hash._END_TEXT_COMPONENT);
+
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_319");
+            Function.Call(Hash._END_TEXT_COMPONENT);
+
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
+            Function.Call(Hash._0x761B77454205A61D, "DIALING...", -1);
+            Function.Call(Hash._END_TEXT_COMPONENT);
+
+            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "DISPLAY_VIEW");
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 4);
+            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
         }
 
         public int GetSelectedIndex(int handle)
@@ -59,12 +83,12 @@ namespace iFruitAddon
 
         private bool GetControl(int control)
         {
-            return Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 0, control);
+            return Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, control);
         }
 
         private void DisableControl(int control)
         {
-            Function.Call(Hash.DISABLE_CONTROL_ACTION, 0, control, false);
+            Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, false);
         }
     }
 }
