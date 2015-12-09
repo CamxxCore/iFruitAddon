@@ -3,21 +3,22 @@ using GTA;
 
 namespace iFruitAddon
 {
-    public delegate void ContactAnsweredEvent(iFruitContact contact);
-
-    public delegate void ContactSelectedEvent(iFruitContactCollection sender, iFruitContact selectedItem);
-
     public class iFruitContact
     {
-        public event ContactAnsweredEvent Answered;
-
+        /// <summary>
+        /// Fired when the contact is selected in the contacts app.
+        /// </summary>
         public event ContactSelectedEvent Selected;
+
+        /// <summary>
+        /// Fired when the contact picks up the phone.
+        /// </summary>
+        public event ContactAnsweredEvent Answered;
 
         /// <summary>
         /// The name of the contact.
         /// </summary>
         public string Name { get; private set; }
-
 
         /// <summary>
         /// The index where we should draw the item.
@@ -25,18 +26,21 @@ namespace iFruitAddon
         public int Index { get; private set; }
 
         /// <summary>
-        /// Status representing the outcome when the contact is called. Contact will answer when true.
+        /// Status representing the outcome when the contact is called. 
+        /// Contact will answer when true.
         /// </summary>
         public bool Active { get; set; } = true;
 
         /// <summary>
-        /// Milliseconds timeout before the contact picks up. Set this to 0 if you want the contact to answer instantly.
+        /// Milliseconds timeout before the contact picks up. 
+        /// Set this to 0 if you want the contact to answer instantly.
         /// </summary>
-        public int DialTimeout
-        {
-            get { return _dialTimeout; }
-            set { _dialTimeout = value; }
-        }
+        public int DialTimeout { get; set; } = 8000;
+
+        /// <summary>
+        /// The icon to associate with this contact.
+        /// </summary>
+        public ContactIcon Icon { get; set; } = ContactIcon.Generic;
 
         public iFruitContact(string name, int index)
         {
@@ -56,25 +60,19 @@ namespace iFruitAddon
                 Answered(this);
         }
 
-        public void SetEmpty(int handle)
-        {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "SET_DATA_SLOT_EMPTY");
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 2);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
-        }
-
-        public void Draw(int handle)
+        internal void Draw(int handle)
         {
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "SET_DATA_SLOT");
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_FLOAT, 2.0f);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_FLOAT, (float)Index);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_FLOAT, 0.0f);
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 2);
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, Index);
+            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 0);
             Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
             Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Name);
             Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_MP_1000");
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_999");
             Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_MP_1000");
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_2000");
+            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Icon.Name);
             Function.Call(Hash._END_TEXT_COMPONENT);
             Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
         }
@@ -82,9 +80,7 @@ namespace iFruitAddon
         private bool _dialActive, _busyActive;
         private int _dialSoundID = -1;
         private int _busySoundID = -1;
-
         private int _callTimer, _busyTimer;
-        private int _dialTimeout = 8000;
 
         public void Update()
         {
@@ -127,7 +123,7 @@ namespace iFruitAddon
             _dialSoundID = Function.Call<int>(Hash.GET_SOUND_ID);
             Function.Call(Hash.PLAY_SOUND_FRONTEND, _dialSoundID, "Dial_and_Remote_Ring", "Phone_SoundSet_Default", 1);
 
-            _callTimer = Game.GameTime + _dialTimeout;
+            _callTimer = Game.GameTime + DialTimeout;
             _dialActive = true;
         }
     }

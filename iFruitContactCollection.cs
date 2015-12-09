@@ -25,17 +25,18 @@ namespace iFruitAddon
                 if (Function.Call<bool>(Hash.IS_CONTROL_PRESSED, 2, 176))
                 {
                     index = GetSelectedIndex(handle);
+                    UI.ShowSubtitle(index.ToString());
                 }
             }
-            else
-                _shouldDraw = false;
 
             foreach (var contact in this)
             {
                 contact.Update();
 
                 if (_shouldDraw)
+                {
                     contact.Draw(handle);
+                }
 
                 if (index != -1 && index == contact.Index)
                 {
@@ -43,7 +44,9 @@ namespace iFruitAddon
                     contact.OnSelected(this);
                     DisplayCallUI(handle, contact.Name);
                 }
-            }   
+            }
+
+            _shouldDraw = false;
         }
 
         private void DisplayCallUI(int handle, string contactName, string picName = "CELL_300")

@@ -12,27 +12,49 @@ namespace ExampleScript
 
         public ExampleScript()
         {
-            ifruit = new CustomiFruit() {
-                SelectButtonColor = System.Drawing.Color.Orange,
-                ReturnButtonColor = System.Drawing.Color.LimeGreen,
-                KeypadButtonColor = System.Drawing.Color.Purple
+            ifruit = new CustomiFruit()
+            {
+                CenterButtonColor = System.Drawing.Color.Orange,
+                LeftButtonColor = System.Drawing.Color.LimeGreen,
+                RightButtonColor = System.Drawing.Color.Purple,
+                CenterButtonIcon = SoftKeyIcon.Fire,
+                LeftButtonIcon = SoftKeyIcon.Police,
+                RightButtonIcon = SoftKeyIcon.Website
             };
 
-            var contact = new iFruitContact("Spawn Adder", 10);
-            contact.Selected += (sender, args) => Scripts.SpawnVehicle("ADDER", Game.Player.Character.Position);
-            ifruit.Contacts.Add(contact);
-            contact = new iFruitContact("Teleport to Waypoint", 11);
-            contact.Selected += (sender, args) => Scripts.TeleportToWaypoint();
-            ifruit.Contacts.Add(contact);
-            this.Tick += OnTick;
+            ifruit.SetWallpaper(new Wallpaper("char_facebook"));
+            //or..
+            ifruit.SetWallpaper(Wallpaper.BadgerDefault);
 
+            var contact = new iFruitContact("Spawn Adder", 19);
+            contact.Answered += Contact_Answered;
+            contact.DialTimeout = 8000;
+
+            //set custom icons by instantiating the ContactIcon class
+            contact.Icon = new ContactIcon("char_sasquatch");
+
+            ifruit.Contacts.Add(contact);
+
+            contact = new iFruitContact("Teleport to Waypoint", 20);
+            contact.Selected += (s, a) => Scripts.TeleportToWaypoint();
+            contact.DialTimeout = 0;
+            contact.Icon = ContactIcon.Target;
+
+            ifruit.Contacts.Add(contact);
+
+            Tick += OnTick;
+        }
+
+        private void Contact_Answered(iFruitContact contact)
+        {
+            Scripts.SpawnVehicle("ADDER");
+            UI.Notify("Your Adder has been delivered!");
         }
 
         void OnTick(object sender, EventArgs e)
         {
             ifruit.Update();
         }
-
     }
 
     public static class Scripts
@@ -52,13 +74,11 @@ namespace ExampleScript
             }
         }
 
-        public static void SpawnVehicle(string vehiclename, Vector3 pos)
+        public static void SpawnVehicle(string vehiclename)
         {
             Model model = new Model(vehiclename);
             model.Request(1000);
-            var veh = Function.Call<Vehicle>((Hash)0xAF35D0D2583051B0, model.Hash, pos.X, pos.Y, pos.Z, Game.Player.Character.Heading, 0, 0);
-            Function.Call(Hash.SET_PED_INTO_VEHICLE, Game.Player.Character.Handle, veh.Handle, -1);
+            World.CreateVehicle(model, Game.Player.Character.Position + Game.Player.Character.ForwardVector * 5);
         }
     }
-
 }
