@@ -82,7 +82,7 @@ namespace iFruitAddon
         private int _busySoundID = -1;
         private int _callTimer, _busyTimer;
 
-        public void Update()
+        internal void Update()
         {
             if (_busyActive && Game.GameTime > _busyTimer)
             {

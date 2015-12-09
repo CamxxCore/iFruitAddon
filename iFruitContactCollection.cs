@@ -14,7 +14,7 @@ namespace iFruitAddon
         private bool _shouldDraw = true;
         private int _mHash;
 
-        public void Update(int handle)
+        internal void Update(int handle)
         {
             int index = -1;
 
@@ -25,7 +25,6 @@ namespace iFruitAddon
                 if (Function.Call<bool>(Hash.IS_CONTROL_PRESSED, 2, 176))
                 {
                     index = GetSelectedIndex(handle);
-                    UI.ShowSubtitle(index.ToString());
                 }
             }
 

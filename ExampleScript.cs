@@ -29,6 +29,7 @@ namespace ExampleScript
             var contact = new iFruitContact("Spawn Adder", 19);
             contact.Answered += Contact_Answered;
             contact.DialTimeout = 8000;
+            contact.Active = false;
 
             //set custom icons by instantiating the ContactIcon class
             contact.Icon = new ContactIcon("char_sasquatch");
