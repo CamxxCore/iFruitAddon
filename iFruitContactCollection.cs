@@ -8,17 +8,17 @@ namespace iFruitAddon
     {
         public iFruitContactCollection()
         {
-            _mHash = Function.Call<int>(Hash.GET_HASH_KEY, "appcontacts");
+            _mScriptHash = Function.Call<int>(Hash.GET_HASH_KEY, "appcontacts");
         }
 
         private bool _shouldDraw = true;
-        private int _mHash;
+        private int _mScriptHash;
 
         internal void Update(int handle)
         {
             int index = -1;
 
-            if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mHash) > 0)
+            if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mScriptHash) > 0)
             {
                 _shouldDraw = true;
 
@@ -41,14 +41,14 @@ namespace iFruitAddon
                 {
                     contact.Call();
                     contact.OnSelected(this);
-                    DisplayCallUI(handle, contact.Name);
+                    DisplayCallUI(handle, contact.Name, contact.Icon.Name);
                 }
             }
 
             _shouldDraw = false;
         }
 
-        private void DisplayCallUI(int handle, string contactName, string picName = "CELL_300")
+        internal void DisplayCallUI(int handle, string contactName, string picName = "CELL_300")
         {
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "SET_DATA_SLOT");
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 4);
@@ -59,7 +59,8 @@ namespace iFruitAddon
             Function.Call(Hash._0x761B77454205A61D, contactName, -1);
             Function.Call(Hash._END_TEXT_COMPONENT);
 
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_319");
+            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_2000");
+            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, picName);
             Function.Call(Hash._END_TEXT_COMPONENT);
 
             Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
@@ -73,7 +74,7 @@ namespace iFruitAddon
             Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
         }
 
-        public int GetSelectedIndex(int handle)
+        internal int GetSelectedIndex(int handle)
         {
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "GET_CURRENT_SELECTION");
             int num = Function.Call<int>(Hash._POP_SCALEFORM_MOVIE_FUNCTION);
@@ -83,12 +84,12 @@ namespace iFruitAddon
             return data;
         }
 
-        private bool GetControl(int control)
+        internal bool GetControl(int control)
         {
             return Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 2, control);
         }
 
-        private void DisableControl(int control)
+        internal void DisableControl(int control)
         {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, false);
         }

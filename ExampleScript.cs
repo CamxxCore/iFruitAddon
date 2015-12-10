@@ -26,10 +26,10 @@ namespace ExampleScript
             //or..
             ifruit.SetWallpaper(Wallpaper.BadgerDefault);
 
-            var contact = new iFruitContact("Spawn Adder", 19);
+            var contact = new iFruitContact("~r~Spawn Adder", 19);
             contact.Answered += Contact_Answered;
             contact.DialTimeout = 8000;
-            contact.Active = false;
+            contact.Active = true;
 
             //set custom icons by instantiating the ContactIcon class
             contact.Icon = new ContactIcon("char_sasquatch");
@@ -37,7 +37,7 @@ namespace ExampleScript
             ifruit.Contacts.Add(contact);
 
             contact = new iFruitContact("Teleport to Waypoint", 20);
-            contact.Selected += (s, a) => Scripts.TeleportToWaypoint();
+            contact.Answered += (s) => Scripts.TeleportToWaypoint();
             contact.DialTimeout = 0;
             contact.Icon = ContactIcon.Target;
 
@@ -55,6 +55,12 @@ namespace ExampleScript
         void OnTick(object sender, EventArgs e)
         {
             ifruit.Update();
+        }
+
+        protected override void Dispose(bool A_0)
+        {
+            ifruit.Contacts.ForEach(x => x.EndCall());
+            base.Dispose(A_0);
         }
     }
 

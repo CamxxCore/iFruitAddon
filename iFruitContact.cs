@@ -1,4 +1,5 @@
 ﻿using GTA.Native;
+using System;
 using GTA;
 
 namespace iFruitAddon
@@ -8,6 +9,8 @@ namespace iFruitAddon
         /// <summary>
         /// Fired when the contact is selected in the contacts app.
         /// </summary>
+        /// 
+        [Obsolete("This method will be removed. Use the Answered event instead.")]
         public event ContactSelectedEvent Selected;
 
         /// <summary>
@@ -18,12 +21,12 @@ namespace iFruitAddon
         /// <summary>
         /// The name of the contact.
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; } = "";
 
         /// <summary>
         /// The index where we should draw the item.
         /// </summary>
-        public int Index { get; private set; }
+        public int Index { get; private set; } = 0;
 
         /// <summary>
         /// Status representing the outcome when the contact is called. 
@@ -125,6 +128,23 @@ namespace iFruitAddon
 
             _callTimer = Game.GameTime + DialTimeout;
             _dialActive = true;
+        }
+
+        public void EndCall()
+        {
+            if (_dialActive)
+            {
+                Function.Call(Hash.STOP_SOUND, _dialSoundID);
+                Function.Call(Hash.RELEASE_SOUND_ID, _dialSoundID);
+                _dialSoundID = -1;
+            }
+
+            if (_busyActive)
+            {
+                Function.Call(Hash.STOP_SOUND, _busySoundID);
+                Function.Call(Hash.RELEASE_SOUND_ID, _busySoundID);
+                _busySoundID = -1;
+            }
         }
     }
 }

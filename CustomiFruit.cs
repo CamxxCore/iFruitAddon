@@ -59,7 +59,7 @@ namespace iFruitAddon
         public CustomiFruit(iFruitContactCollection contacts)
         {
             _contacts = contacts;
-            _mHash = Function.Call<int>(Hash.GET_HASH_KEY, "cellphone_flashhand");
+            _mScriptHash = Function.Call<int>(Hash.GET_HASH_KEY, "cellphone_flashhand");
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace iFruitAddon
             Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
         }
 
-        private void SetWallpaperTXD(string textureDict)
+        internal void SetWallpaperTXD(string textureDict)
         {
             Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_BACKGROUND_CREW_IMAGE");
             Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_2000");
@@ -152,11 +152,11 @@ namespace iFruitAddon
         private bool _shouldDraw = true;    
         private PhoneImage _wallpaper;
         private iFruitContactCollection _contacts;
-        private int _mHash;
+        private int _mScriptHash;
 
         public void Update()
         {
-            if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mHash) > 0)
+            if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mScriptHash) > 0)
             {
                 if (_shouldDraw)
                 {
