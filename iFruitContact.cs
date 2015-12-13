@@ -38,7 +38,7 @@ namespace iFruitAddon
         /// Milliseconds timeout before the contact picks up. 
         /// Set this to 0 if you want the contact to answer instantly.
         /// </summary>
-        public int DialTimeout { get; set; } = 8000;
+        public int DialTimeout { get; set; } = 0;
 
         /// <summary>
         /// The icon to associate with this contact.
@@ -123,11 +123,17 @@ namespace iFruitAddon
                 return;
 
             Game.Player.Character.Task.UseMobilePhone();
-            _dialSoundID = Function.Call<int>(Hash.GET_SOUND_ID);
-            Function.Call(Hash.PLAY_SOUND_FRONTEND, _dialSoundID, "Dial_and_Remote_Ring", "Phone_SoundSet_Default", 1);
 
-            _callTimer = Game.GameTime + DialTimeout;
-            _dialActive = true;
+            if (DialTimeout > 0)
+            {
+                _dialSoundID = Function.Call<int>(Hash.GET_SOUND_ID);
+                Function.Call(Hash.PLAY_SOUND_FRONTEND, _dialSoundID, "Dial_and_Remote_Ring", "Phone_SoundSet_Default", 1);
+                _callTimer = Game.GameTime + DialTimeout;
+                _dialActive = true;
+            }
+
+            else
+                OnAnswered(this);
         }
 
         public void EndCall()

@@ -26,7 +26,7 @@ namespace ExampleScript
             //or..
             ifruit.SetWallpaper(Wallpaper.BadgerDefault);
 
-            var contact = new iFruitContact("~r~Spawn Adder", 19);
+            var contact = new iFruitContact("Spawn Adder", 19);
             contact.Answered += Contact_Answered;
             contact.DialTimeout = 8000;
             contact.Active = true;
