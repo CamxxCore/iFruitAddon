@@ -42,6 +42,8 @@ namespace iFruitAddon
                     contact.Call();
                     contact.OnSelected(this);
                     DisplayCallUI(handle, contact.Name, contact.Icon.Name);
+                    Script.Wait(5);            
+                    RemoveActiveNotification();
                 }
             }
 
@@ -92,6 +94,15 @@ namespace iFruitAddon
         internal void DisableControl(int control)
         {
             Function.Call(Hash.DISABLE_CONTROL_ACTION, 2, control, false);
+        }
+
+        internal void RemoveActiveNotification()
+        {
+            Function.Call(Hash._SET_NOTIFICATION_TEXT_ENTRY, "STRING");
+            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, "temp");
+            int temp = Function.Call<int>(Hash._DRAW_NOTIFICATION, false, 1);
+            Function.Call(Hash._REMOVE_NOTIFICATION, temp);
+            Function.Call(Hash._REMOVE_NOTIFICATION, temp - 1);
         }
     }
 }

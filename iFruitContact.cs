@@ -143,6 +143,7 @@ namespace iFruitAddon
                 Function.Call(Hash.STOP_SOUND, _dialSoundID);
                 Function.Call(Hash.RELEASE_SOUND_ID, _dialSoundID);
                 _dialSoundID = -1;
+                _dialActive = false;
             }
 
             if (_busyActive)
@@ -150,6 +151,7 @@ namespace iFruitAddon
                 Function.Call(Hash.STOP_SOUND, _busySoundID);
                 Function.Call(Hash.RELEASE_SOUND_ID, _busySoundID);
                 _busySoundID = -1;
+                _busyActive = false;
             }
         }
     }
