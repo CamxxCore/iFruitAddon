@@ -106,5 +106,15 @@ namespace iFruitAddon
         public static ContactIcon Victim { get { return new ContactIcon("dia_victim"); } }
         public static ContactIcon Target { get { return new ContactIcon("dia_target"); } }
         public static ContactIcon Globe { get { return new ContactIcon("rank_globe_21x21"); } }
+        public static ContactIcon Pegasus { get { return new ContactIcon("char_pegasus_delivery"); } }
+        public static ContactIcon Bennys { get { return new ContactIcon("char_carsite3"); } }
+        public static ContactIcon PlaneSite { get { return new ContactIcon("char_planesite"); } }
+        public static ContactIcon MilSite { get { return new ContactIcon("char_milsite"); } }
+        public static ContactIcon Captain { get { return new ContactIcon("char_boatsite2"); } }
+        public static ContactIcon ActingUp { get { return new ContactIcon("char_acting_up"); } }
+        public static ContactIcon Blimp2 { get { return new ContactIcon("char_blimp2"); } }
+        public static ContactIcon GangApp { get { return new ContactIcon("char_gangapp"); } }
+        public static ContactIcon AgentHaines { get { return new ContactIcon("dia_agent14"); } }
+        public static ContactIcon Maxim { get { return new ContactIcon("dia_maxim"); } }
     }
 }
