@@ -89,11 +89,11 @@ namespace iFruitAddon
         /// <param name="text"></param>
         public void SetTextHeader(string text)
         {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_HEADER");
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
-            Function.Call(Hash._0x761B77454205A61D, text, -1);
-            Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+            Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, "SET_HEADER");
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_SCALEFORM_STRING, "STRING");
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING, text, -1);
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING);
+            Function.Call(Hash.END_SCALEFORM_MOVIE_METHOD);
         }
 
         /// <summary>
@@ -103,11 +103,11 @@ namespace iFruitAddon
         /// <param name="icon">Supplied icon</param>
         public void SetSoftKeyIcon(int buttonID, SoftKeyIcon icon)
         {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_SOFT_KEYS");
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, buttonID);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_BOOL, true);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, (int)icon);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+            Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, "SET_SOFT_KEYS");
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, buttonID);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_BOOL, true);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, (int)icon);
+            Function.Call(Hash.END_SCALEFORM_MOVIE_METHOD);
         }
 
         /// <summary>
@@ -117,21 +117,21 @@ namespace iFruitAddon
         /// <param name="color">Supplied color</param>
         public void SetSoftKeyColor(int buttonID, Color color)
         {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_SOFT_KEYS_COLOUR");
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, buttonID);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.R);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.G);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, color.B);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+            Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, "SET_SOFT_KEYS_COLOUR");
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, buttonID);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, color.R);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, color.G);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, color.B);
+            Function.Call(Hash.END_SCALEFORM_MOVIE_METHOD);
         }
 
         internal void SetWallpaperTXD(string textureDict)
         {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, Handle, "SET_BACKGROUND_CREW_IMAGE");
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_2000");
-            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, textureDict);
-            Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+            Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, Handle, "SET_BACKGROUND_CREW_IMAGE");
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_SCALEFORM_STRING, "CELL_2000");
+            Function.Call(Hash.ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL, textureDict);
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING);
+            Function.Call(Hash.END_SCALEFORM_MOVIE_METHOD);
         }
 
         public void SetWallpaper(Wallpaper wallpaper)
@@ -156,7 +156,7 @@ namespace iFruitAddon
 
         public void Update()
         {
-            if (Function.Call<int>(Hash._GET_NUMBER_OF_INSTANCES_OF_STREAMED_SCRIPT, _mScriptHash) > 0)
+            if (Function.Call<int>(Hash.GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH, _mScriptHash) > 0)
             {
                 if (_shouldDraw)
                 {

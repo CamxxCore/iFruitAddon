@@ -65,19 +65,19 @@ namespace iFruitAddon
 
         internal void Draw(int handle)
         {
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION, handle, "SET_DATA_SLOT");
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 2);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, Index);
-            Function.Call(Hash._PUSH_SCALEFORM_MOVIE_FUNCTION_PARAMETER_INT, 0);
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "STRING");
-            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Name);
-            Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_999");
-            Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._BEGIN_TEXT_COMPONENT, "CELL_2000");
-            Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, Icon.Name);
-            Function.Call(Hash._END_TEXT_COMPONENT);
-            Function.Call(Hash._POP_SCALEFORM_MOVIE_FUNCTION_VOID);
+            Function.Call(Hash.BEGIN_SCALEFORM_MOVIE_METHOD, handle, "SET_DATA_SLOT");
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, 2);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, Index);
+            Function.Call(Hash.SCALEFORM_MOVIE_METHOD_ADD_PARAM_INT, 0);
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_SCALEFORM_STRING, "STRING");
+            Function.Call(Hash.ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL, Name);
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING);
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_SCALEFORM_STRING, "CELL_999");
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING);
+            Function.Call(Hash.BEGIN_TEXT_COMMAND_SCALEFORM_STRING, "CELL_2000");
+            Function.Call(Hash.ADD_TEXT_COMPONENT_SUBSTRING_TEXT_LABEL, Icon.Name);
+            Function.Call(Hash.END_TEXT_COMMAND_SCALEFORM_STRING);
+            Function.Call(Hash.END_SCALEFORM_MOVIE_METHOD);
         }
 
         private bool _dialActive, _busyActive;

@@ -1,6 +1,4 @@
-﻿using System;
-using GTA;
-using GTA.Math;
+﻿using GTA;
 using GTA.Native;
 using iFruitAddon;
 
@@ -14,9 +12,9 @@ namespace ExampleScript
         {
             ifruit = new CustomiFruit()
             {
-                CenterButtonColor = System.Drawing.Color.Orange,
-                LeftButtonColor = System.Drawing.Color.LimeGreen,
-                RightButtonColor = System.Drawing.Color.Purple,
+                CenterButtonColor = Color.Orange,
+                LeftButtonColor = Color.LimeGreen,
+                RightButtonColor = Color.Purple,
                 CenterButtonIcon = SoftKeyIcon.Fire,
                 LeftButtonIcon = SoftKeyIcon.Police,
                 RightButtonIcon = SoftKeyIcon.Website
@@ -49,18 +47,12 @@ namespace ExampleScript
         private void Contact_Answered(iFruitContact contact)
         {
             Scripts.SpawnVehicle("ADDER");
-            UI.Notify("Your Adder has been delivered!");
+            GTA.UI.Screen.ShowSubtitle("Your Adder has been delivered!");            
         }
 
         void OnTick(object sender, EventArgs e)
         {
             ifruit.Update();
-        }
-
-        protected override void Dispose(bool A_0)
-        {
-            ifruit.Contacts.ForEach(x => x.EndCall());
-            base.Dispose(A_0);
         }
     }
 
@@ -77,7 +69,7 @@ namespace ExampleScript
             }
             else
             {
-                UI.ShowSubtitle("Waypoint not active.");
+				        GTA.UI.Screen.ShowSubtitle("Waypoint not active.");
             }
         }
 

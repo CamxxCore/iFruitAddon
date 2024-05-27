@@ -1,0 +1,66 @@
+<Project>
+
+	<PropertyGroup Label="Versioning">
+		<VersionMajor>3</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionPatch>$([System.DateTime]::UtcNow.ToString("MMdd"))</VersionPatch>
+		<VersionRevision>$([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes.ToString("0"))</VersionRevision>
+		<VersionPrefix>$(VersionMajor).$(VersionMinor).$(VersionPatch).$(VersionRevision)</VersionPrefix>
+		<VersionSuffix Condition="$(Configuration.Equals('Debug'))">Development</VersionSuffix>
+		<FileVersion>$(VersionMajor).$(VersionMinor).$(VersionPatch)</FileVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Technical">
+		<AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<AnalysisMode>recommended</AnalysisMode>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+		<DebugType>full</DebugType>
+		<Deterministic>true</Deterministic>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratedAssemblyInfoFile>Properties\AssemblyInfo.cs</GeneratedAssemblyInfoFile>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>latest</LangVersion>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<Nullable>enable</Nullable>
+		<PlatformTarget>x64</PlatformTarget>
+		<Platforms>x64</Platforms>
+		<TargetFramework>net48</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+	</PropertyGroup>
+
+	<PropertyGroup Label="MetaData">
+		<Author>CamxxCore</Author>
+		<Authors>$(Author)</Authors>
+		<Company>https://github.com/$(Author)</Company>
+		<Copyright>Copyright © $([System.DateTime]::UtcNow.Year) $(Author)</Copyright>
+		<Description>GTA V ScriptHookVDotNet extension allowing customization of the in-game mobile phone.</Description>
+		<Product>$(AssemblyName)</Product>
+		<RepositoryUrl>https://github.com/CamxxCore/iFruitAddon</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Title>$(AssemblyName)</Title>
+	</PropertyGroup>
+
+	<PropertyGroup Label="Package">
+		<PackageId>$(AssemblyName)</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/CamxxCore/iFruitAddon</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageTags>library;csharp;ef-core;entity-framework-core</PackageTags>
+		<PackageVersion>$(FileVersion)</PackageVersion>
+    </PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Equals('Release'))">
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Folder Include="Properties\" />
+		<None Include="..\README.md" Pack="True" PackagePath="\" />
+	</ItemGroup>  
+
+</Project>
